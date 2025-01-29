@@ -1,10 +1,10 @@
 import "./App.css"
-import Board from "./components/Board"
+import MainBoard from "./components/MainBoard"
 
 function App() {
   return (
     <div>
-      <Board />
+      <MainBoard />
     </div>
   )
 }
