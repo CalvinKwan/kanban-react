@@ -7,8 +7,11 @@ import SortableTask from "./SortableTask"
 const DroppableColumn: React.FC<{
   column: Column
   onAddTask: (columnId: string, taskText: string) => void
+  onModifyTask: (taskId: string, newText: string) => void
   overId: string | null
-}> = ({ column, onAddTask, overId }) => {
+  onEditStart: () => void
+  onEditEnd: () => void
+}> = ({ column, onAddTask, onModifyTask, overId, onEditStart, onEditEnd }) => {
   const { setNodeRef } = useDroppable({ id: column.id })
   const [newTask, setNewTask] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
@@ -66,7 +69,7 @@ const DroppableColumn: React.FC<{
           {column.tasks.map((task) => (
             <React.Fragment key={task.id}>
               {overId === task.id && <div className="h-1 bg-blue-500 rounded my-1"></div>}
-              <SortableTask task={task} />
+              <SortableTask task={task} onModifyTask={onModifyTask} onEditStart={onEditStart} onEditEnd={onEditEnd} />
             </React.Fragment>
           ))}
           {overId === column.id && <div className="h-1 bg-blue-500 rounded my-1"></div>}

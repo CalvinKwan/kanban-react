@@ -10,6 +10,7 @@ const MainBoard: React.FC = () => {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
   const [dragging, setDragging] = useState(false)
   const [overId, setOverId] = useState<string | null>(null)
+  const [isEditing, setIsEditing] = useState(false)
 
   const handleDragStart = useCallback(
     (event: any) => {
@@ -103,9 +104,36 @@ const MainBoard: React.FC = () => {
     )
   }, [])
 
+  const handleModifyTask = useCallback((taskId: string, newText: string) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) => ({
+        ...column,
+        tasks: column.tasks.map((task) => (task.id === taskId ? { ...task, text: newText } : task)),
+      }))
+    )
+  }, [])
+
+  const handleEditStart = useCallback(() => {
+    setIsEditing(true)
+  }, [])
+
+  const handleEditEnd = useCallback(() => {
+    setIsEditing(false)
+  }, [])
+
   const memoizedColumns = useMemo(() => {
-    return columns.map((column) => <DroppableColumn key={column.id} column={column} onAddTask={handleAddTask} overId={overId} />)
-  }, [columns, handleAddTask, overId])
+    return columns.map((column) => (
+      <DroppableColumn
+        key={column.id}
+        column={column}
+        onAddTask={handleAddTask}
+        onModifyTask={handleModifyTask}
+        overId={overId}
+        onEditStart={handleEditStart}
+        onEditEnd={handleEditEnd}
+      />
+    ))
+  }, [columns, handleAddTask, handleModifyTask, overId, handleEditStart, handleEditEnd])
 
   const sensors = useSensors(
     useSensor(MouseSensor),
@@ -124,13 +152,16 @@ const MainBoard: React.FC = () => {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="bg-gray-200 w-full ps-5 pt-8 ">
+      <div className="bg-gray-200 w-full px-5 pt-8 text-justify lg:text-start ">
         <h1 className="text-2xl font-bold mb-4">Welcome to the Kanban Board</h1>
         <p className="mb-4">
-          This application allows you to manage tasks using a Kanban board. You can drag and drop tasks between columns, add new tasks, and organize
-          your workflow efficiently.
+          This application allows you to manage tasks using a Kanban board. You can drag and drop tasks between columns, add new tasks, edit existing
+          tasks, and organize your workflow efficiently.
         </p>
         <p className="mb-4">- To add a new task, type the task description in the input field and press Enter or click outside the input field.</p>
+        <p className="mb-4">
+          - To edit a task, click the edit icon next to the task, make your changes, and press Enter or click outside the input field to save.
+        </p>
         <p className="mb-4">- To move a task, simply drag and drop it to the desired column.</p>
         <p>Enjoy managing your tasks!</p>
       </div>
