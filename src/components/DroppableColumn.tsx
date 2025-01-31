@@ -19,17 +19,27 @@ const DroppableColumn: React.FC<{
     setNewTask("")
   }, [newTask, onAddTask, column.id])
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+  const handleClickOutsideOrEnter = useCallback(
+    (event: MouseEvent | KeyboardEvent) => {
+      if (event instanceof MouseEvent) {
+        if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+          handleNewTaskSubmit()
+        }
+      } else if (event instanceof KeyboardEvent && event.key === "Enter") {
         handleNewTaskSubmit()
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
+    },
+    [handleNewTaskSubmit]
+  )
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutsideOrEnter)
+    document.addEventListener("keydown", handleClickOutsideOrEnter)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
+      document.removeEventListener("mousedown", handleClickOutsideOrEnter)
+      document.removeEventListener("keydown", handleClickOutsideOrEnter)
     }
-  }, [handleNewTaskSubmit])
+  }, [handleClickOutsideOrEnter])
 
   const indicatorClass = useMemo(() => {
     switch (column.title) {

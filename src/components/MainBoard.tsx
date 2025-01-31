@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react"
-import { DndContext, rectIntersection, DragOverlay } from "@dnd-kit/core"
+import { DndContext, rectIntersection, DragOverlay, TouchSensor, MouseSensor, useSensor, useSensors } from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
 import { Column, Task } from "./types"
 import DroppableColumn from "./DroppableColumn"
@@ -107,12 +107,36 @@ const MainBoard: React.FC = () => {
     return columns.map((column) => <DroppableColumn key={column.id} column={column} onAddTask={handleAddTask} overId={overId} />)
   }, [columns, handleAddTask, overId])
 
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150, // Delay to prevent accidental drags
+        tolerance: 5, // Allow small movements before dragging starts
+      },
+    })
+  )
   return (
-    <DndContext collisionDetection={rectIntersection} onDragStart={handleDragStart} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
-      <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-start bg-gray-200 p-6 pt-[20vh] min-h-screen w-full">
+    <DndContext
+      sensors={sensors}
+      collisionDetection={rectIntersection}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="bg-gray-200 w-full pt-8">
+        <h1 className="text-2xl font-bold mb-4">Welcome to the Kanban Board</h1>
+        <p className="mb-4">
+          This application allows you to manage tasks using a Kanban board. You can drag and drop tasks between columns, add new tasks, and organize
+          your workflow efficiently.
+        </p>
+        <p className="mb-4">To add a new task, type the task description in the input field and press Enter or click outside the input field.</p>
+        <p className="mb-4">To move a task, simply drag and drop it to the desired column.</p>
+        <p>Enjoy managing your tasks!</p>
+      </div>
+      <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-start bg-gray-200 p-6  min-h-screen w-full">
         {memoizedColumns}
       </div>
-
       <DragOverlay>
         {dragging && activeTask ? (
           <div className="p-3 bg-gray-300 text-gray-800 font-semibold rounded-lg shadow-lg mb-2 hover:bg-gray-400 cursor-grabbing transition-transform transform scale-105 duration-300 opacity-45">
