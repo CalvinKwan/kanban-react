@@ -7,9 +7,7 @@ import editicon from "/images/edit-text.webp"
 const SortableTask: React.FC<{
   task: Task
   onModifyTask: (taskId: string, newText: string) => void
-  onEditStart: () => void
-  onEditEnd: () => void
-}> = ({ task, onModifyTask, onEditStart, onEditEnd }) => {
+}> = ({ task, onModifyTask }) => {
   const { attributes, listeners, setNodeRef, transform } = useSortable({ id: task.id })
   const [isEditing, setIsEditing] = useState(false)
   const [newText, setNewText] = useState(task.text)
@@ -24,12 +22,10 @@ const SortableTask: React.FC<{
 
   const handleEditClick = () => {
     setIsEditing(true)
-    onEditStart()
   }
 
   const handleBlur = () => {
     setIsEditing(false)
-    onEditEnd()
     if (newText.trim() && newText !== task.text) {
       onModifyTask(task.id, newText.trim())
     }

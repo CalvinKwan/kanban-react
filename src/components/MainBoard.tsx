@@ -10,7 +10,6 @@ const MainBoard: React.FC = () => {
   const [activeTask, setActiveTask] = useState<Task | null>(null)
   const [dragging, setDragging] = useState(false)
   const [overId, setOverId] = useState<string | null>(null)
-  const [isEditing, setIsEditing] = useState(false)
 
   const handleDragStart = useCallback(
     (event: any) => {
@@ -113,27 +112,11 @@ const MainBoard: React.FC = () => {
     )
   }, [])
 
-  const handleEditStart = useCallback(() => {
-    setIsEditing(true)
-  }, [])
-
-  const handleEditEnd = useCallback(() => {
-    setIsEditing(false)
-  }, [])
-
   const memoizedColumns = useMemo(() => {
     return columns.map((column) => (
-      <DroppableColumn
-        key={column.id}
-        column={column}
-        onAddTask={handleAddTask}
-        onModifyTask={handleModifyTask}
-        overId={overId}
-        onEditStart={handleEditStart}
-        onEditEnd={handleEditEnd}
-      />
+      <DroppableColumn key={column.id} column={column} onAddTask={handleAddTask} onModifyTask={handleModifyTask} overId={overId} />
     ))
-  }, [columns, handleAddTask, handleModifyTask, overId, handleEditStart, handleEditEnd])
+  }, [columns, handleAddTask, handleModifyTask, overId])
 
   const sensors = useSensors(
     useSensor(MouseSensor),

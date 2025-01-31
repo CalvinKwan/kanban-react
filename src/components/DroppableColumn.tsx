@@ -9,9 +9,7 @@ const DroppableColumn: React.FC<{
   onAddTask: (columnId: string, taskText: string) => void
   onModifyTask: (taskId: string, newText: string) => void
   overId: string | null
-  onEditStart: () => void
-  onEditEnd: () => void
-}> = ({ column, onAddTask, onModifyTask, overId, onEditStart, onEditEnd }) => {
+}> = ({ column, onAddTask, onModifyTask, overId }) => {
   const { setNodeRef } = useDroppable({ id: column.id })
   const [newTask, setNewTask] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
@@ -69,7 +67,7 @@ const DroppableColumn: React.FC<{
           {column.tasks.map((task) => (
             <React.Fragment key={task.id}>
               {overId === task.id && <div className="h-1 bg-blue-500 rounded my-1"></div>}
-              <SortableTask task={task} onModifyTask={onModifyTask} onEditStart={onEditStart} onEditEnd={onEditEnd} />
+              <SortableTask task={task} onModifyTask={onModifyTask} />
             </React.Fragment>
           ))}
           {overId === column.id && <div className="h-1 bg-blue-500 rounded my-1"></div>}
