@@ -124,17 +124,17 @@ const MainBoard: React.FC = () => {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="bg-gray-200 w-full pt-8">
+      <div className="bg-gray-200 w-full ps-5 pt-8 ">
         <h1 className="text-2xl font-bold mb-4">Welcome to the Kanban Board</h1>
         <p className="mb-4">
           This application allows you to manage tasks using a Kanban board. You can drag and drop tasks between columns, add new tasks, and organize
           your workflow efficiently.
         </p>
-        <p className="mb-4">To add a new task, type the task description in the input field and press Enter or click outside the input field.</p>
-        <p className="mb-4">To move a task, simply drag and drop it to the desired column.</p>
+        <p className="mb-4">- To add a new task, type the task description in the input field and press Enter or click outside the input field.</p>
+        <p className="mb-4">- To move a task, simply drag and drop it to the desired column.</p>
         <p>Enjoy managing your tasks!</p>
       </div>
-      <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-start bg-gray-200 p-6  min-h-screen w-full">
+      <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-start bg-gray-200 p-6  lg:min-h-screen w-full">
         {memoizedColumns}
       </div>
       <DragOverlay>
