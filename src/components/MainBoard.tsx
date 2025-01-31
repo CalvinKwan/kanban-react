@@ -122,8 +122,8 @@ const MainBoard: React.FC = () => {
     useSensor(MouseSensor),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 150, // Delay to prevent accidental drags
-        tolerance: 5, // Allow small movements before dragging starts
+        delay: 150,
+        tolerance: 5,
       },
     })
   )
@@ -135,7 +135,7 @@ const MainBoard: React.FC = () => {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="bg-gray-200 w-full px-5 pt-8 text-justify lg:text-start ">
+      <div className="bg-gray-200 w-full px-5 pt-8 text-start ">
         <h1 className="text-2xl font-bold mb-4">Welcome to the Kanban Board</h1>
         <p className="mb-4">
           This application allows you to manage tasks using a Kanban board. You can drag and drop tasks between columns, add new tasks, edit existing
