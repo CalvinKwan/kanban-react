@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+Kanban Board - React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Kanban board application built with React, TypeScript, Vite, and TailwindCSS. It allows users to manage tasks by dragging and dropping them between different columns.
 
-Currently, two official plugins are available:
+Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📝 Display tasks in three columns: To-Do, In Progress, and Done.
 
-## Expanding the ESLint configuration
+➕ Add new tasks to the To-Do column.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+🔄 Drag and drop tasks between columns.
 
-- Configure the top-level `parserOptions` property like this:
+⚡ Optimized with React hooks and memoization for performance.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Installation & Setup
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Prerequisites
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Ensure you have the following installed:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Node.js (>=16.x recommended)
+
+npm or yarn
+
+1️⃣ Clone the Repository
+`git clone https://github.com/CalvinKwan/kanban-react.git`
+`cd kanban-react`
+
+Using npm or yarn:
+
+2️⃣ Install Dependencies
+`npm install` or `yarn install`
+
+3️⃣ Run the Application
+`npm run dev` or `yarn dev`
+
+The application will start at: http://localhost:5173
+
+4️⃣ Build the Application for Production
+`npm run build` or `yarn build`
+
+To preview the production build:
+`npm run preview`
+
+Project Structure:
+kanban-react/
+├── src/
+│ ├── components/
+│ │ ├── MainBoard.tsx
+│ │ ├── DroppableColumn.tsx
+│ │ ├── SortableTask.tsx
+│ ├── types/
+│ │ ├── index.ts
+│ ├── App.tsx
+│ ├── main.tsx
+│ ├── index.css
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── README.md

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import { useDroppable } from "@dnd-kit/core"
 import { SortableContext } from "@dnd-kit/sortable"
 import { Column } from "./types"
@@ -8,17 +8,16 @@ const DroppableColumn: React.FC<{
   column: Column
   onAddTask: (columnId: string, taskText: string) => void
   overId: string | null
-  activeTaskId: string | null
-}> = ({ column, onAddTask, overId, activeTaskId }) => {
+}> = ({ column, onAddTask, overId }) => {
   const { setNodeRef } = useDroppable({ id: column.id })
   const [newTask, setNewTask] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleNewTaskSubmit = () => {
+  const handleNewTaskSubmit = useCallback(() => {
     if (!newTask.trim()) return
     onAddTask(column.id, newTask.trim())
     setNewTask("")
-  }
+  }, [newTask, onAddTask, column.id])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -30,22 +29,29 @@ const DroppableColumn: React.FC<{
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [newTask])
+  }, [handleNewTaskSubmit])
+
+  const indicatorClass = useMemo(() => {
+    switch (column.title) {
+      case "To-Do":
+        return "bg-gray-500"
+      case "In Progress":
+        return "bg-blue-500"
+      default:
+        return "bg-green-500"
+    }
+  }, [column.title])
 
   return (
     <div ref={setNodeRef} className="flex flex-col w-72 bg-white rounded-lg shadow-md p-4 space-y-4 min-h-[10vh] max-h-[50vh] lg:max-h-fit">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <span
-            className={`rounded-full w-3 h-3 ${
-              column.title === "To-Do" ? "bg-gray-500" : column.title === "In Progress" ? "bg-blue-500" : "bg-green-500"
-            }`}
-          />
+          <span className={`rounded-full w-3 h-3 ${indicatorClass}`} />
           <h2 className="text-lg font-bold">{column.title}</h2>
         </div>
         <span className="text-gray-500 text-sm">{column.tasks.length}</span>
       </div>
-      <SortableContext items={column.tasks.filter((task) => task.id !== activeTaskId).map((task) => task.id)}>
+      <SortableContext items={column.tasks.map((task) => task.id)}>
         <div className="flex flex-col space-y-3 overflow-y-auto">
           {column.tasks.map((task) => (
             <React.Fragment key={task.id}>
