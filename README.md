@@ -23,7 +23,7 @@ Node.js (>=16.x recommended)
 npm or yarn
 
 1️⃣ Clone the Repository
-`git clone https://github.com/CalvinKwan/kanban-react.git`
+`git clone --branch main https://github.com/CalvinKwan/kanban-react.git`
 `cd kanban-react`
 
 Using npm or yarn:
