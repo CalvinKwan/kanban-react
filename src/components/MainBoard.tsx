@@ -162,6 +162,7 @@ const MainBoard: React.FC = () => {
           - To edit a task, click the edit icon next to the task, make your changes, and press Enter or click outside the input field to save.
         </p>
         <p className="mb-4">- To move a task, simply drag and drop it to the desired column.</p>
+        <p className="mb-4">- To delete a task, click the remove icon next to the task.</p>
         <p>Enjoy managing your tasks!</p>
       </div>
       <div className="flex flex-col lg:flex-row gap-8 justify-center items-center lg:items-start bg-gray-200 p-6  lg:min-h-screen w-full">
