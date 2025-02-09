@@ -112,11 +112,27 @@ const MainBoard: React.FC = () => {
     )
   }, [])
 
+  const handleDeleteTask = useCallback((taskId: string) => {
+    setColumns((prevColumns) =>
+      prevColumns.map((column) => ({
+        ...column,
+        tasks: column.tasks.filter((task) => task.id !== taskId),
+      }))
+    )
+  }, [])
+
   const memoizedColumns = useMemo(() => {
     return columns.map((column) => (
-      <DroppableColumn key={column.id} column={column} onAddTask={handleAddTask} onModifyTask={handleModifyTask} overId={overId} />
+      <DroppableColumn
+        key={column.id}
+        column={column}
+        onAddTask={handleAddTask}
+        onModifyTask={handleModifyTask}
+        onDeleteTask={handleDeleteTask}
+        overId={overId}
+      />
     ))
-  }, [columns, handleAddTask, handleModifyTask, overId])
+  }, [columns, handleAddTask, handleModifyTask, handleDeleteTask, overId])
 
   const sensors = useSensors(
     useSensor(MouseSensor),

@@ -3,11 +3,13 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { Task } from "./types"
 import editicon from "/images/edit-text.webp"
+import removeicon from "/images/remove.webp"
 
 const SortableTask: React.FC<{
   task: Task
   onModifyTask: (taskId: string, newText: string) => void
-}> = ({ task, onModifyTask }) => {
+  onDeleteTask: (taskId: string) => void
+}> = ({ task, onModifyTask, onDeleteTask }) => {
   const { attributes, listeners, setNodeRef, transform } = useSortable({ id: task.id })
   const [isEditing, setIsEditing] = useState(false)
   const [newText, setNewText] = useState(task.text)
@@ -57,11 +59,19 @@ const SortableTask: React.FC<{
             autoFocus
           />
         ) : (
-          <span>{task.text}</span>
+          <span className="block pr-12 whitespace-normal break-words">{task.text}</span>
         )}
       </div>
       {!isEditing && (
-        <img src={editicon} alt="Edit" onClick={handleEditClick} className="absolute top-4 right-2 w-4 h-4 cursor-pointer z-50 opacity-70 me-1" />
+        <>
+          <img src={editicon} alt="Edit" onClick={handleEditClick} className="absolute top-4 right-9 w-4 h-4 cursor-pointer z-50 opacity-70 me-1" />
+          <img
+            src={removeicon}
+            alt="Remove"
+            onClick={() => onDeleteTask(task.id)}
+            className="absolute top-4 right-2 w-4 h-4 cursor-pointer z-50 opacity-70 me-1"
+          />
+        </>
       )}
     </div>
   )
