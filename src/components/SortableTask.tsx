@@ -64,12 +64,17 @@ const SortableTask: React.FC<{
       </div>
       {!isEditing && (
         <>
-          <img src={editicon} alt="Edit" onClick={handleEditClick} className="absolute top-4 right-9 w-4 h-4 cursor-pointer z-50 opacity-70 me-1" />
+          <img
+            src={editicon}
+            alt="Edit"
+            onClick={handleEditClick}
+            className="absolute top-4 right-8 w-4 h-4 cursor-pointer z-50 opacity-70 hover:opacity-100 me-1"
+          />
           <img
             src={removeicon}
             alt="Remove"
             onClick={() => onDeleteTask(task.id)}
-            className="absolute top-4 right-2 w-4 h-4 cursor-pointer z-50 opacity-70 me-1"
+            className="absolute top-4 right-2 w-4 h-4 cursor-pointer z-50 opacity-70 hover:opacity-100 me-1"
           />
         </>
       )}
