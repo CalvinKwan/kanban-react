@@ -8,6 +8,8 @@ Features
 
 ➕ Add new tasks to the To-Do column.
 
+➖ Remove tasks from any column.
+
 🔄 Drag and drop tasks between columns.
 
 ⚡ Optimized with React hooks and memoization for performance.
@@ -45,16 +47,30 @@ To preview the production build:
 Project Structure:
 kanban-react/
 ├── src/
+│ ├── assets/
+│ │ ├── react.svg
 │ ├── components/
-│ │ ├── MainBoard.tsx
 │ │ ├── DroppableColumn.tsx
+│ │ ├── initialColumns.ts
+│ │ ├── MainBoard.tsx
 │ │ ├── SortableTask.tsx
-│ ├── types/
-│ │ ├── index.ts
+│ │ ├── types.ts
+│ ├── App.css
 │ ├── App.tsx
-│ ├── main.tsx
 │ ├── index.css
+│ ├── main.tsx
+│ ├── vite-env.d.ts
+├── .firebaserc
+├── .gitignore
+├── eslint.config.js
+├── firebase.json
+├── index.html
+├── LICENSE
+├── package-lock.json
 ├── package.json
-├── tsconfig.json
-├── vite.config.ts
+├── postcss.config.mjs
 ├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vite.config.ts
